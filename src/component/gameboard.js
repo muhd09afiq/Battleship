@@ -1,4 +1,4 @@
-import { ro } from "date-fns/locale";
+import { Ship } from "./ship";
 
 export class Gameboard {
   //10x10 grid
@@ -43,7 +43,7 @@ export class Gameboard {
       for (let i = 0; i < shipLength; i++) {
         let currentRow = yRow.at(columnIndex + i);
         let key = currentRow + column;
-        this._board[key] = true;
+        this._board[key] = ship;
       }
     } else {
       //check out of bound
@@ -53,10 +53,21 @@ export class Gameboard {
       for (let i = 0; i < shipLength; i++) {
         let currentColumn = i + column;
         let key = row + currentColumn;
-        this._board[key] = true;
+        this._board[key] = ship;
       }
     }
   }
 
-  receiveAttack() {}
+  receiveAttack(coordinate) {
+    const target = this._board[coordinate];
+    if (target && target instanceof Ship) {
+      target.hit();
+      this._board[coordinate] = "hit"; // Mark as hit
+      return "hit";
+    } else {
+      this._board[coordinate] = "miss"; // Mark as miss
+      this._missedShots.push(coordinate);
+      return "miss";
+    }
+  }
 }
