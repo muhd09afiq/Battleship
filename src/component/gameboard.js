@@ -35,12 +35,20 @@ export class Gameboard {
       let yRow = "ABCDEFGHIJ";
       yRow = yRow.split("");
       let columnIndex = yRow.indexOf(row);
-
+      //check out of bound
+      if (columnIndex + shipLength > yRow.length) {
+        return "Ship out of bound";
+      }
       for (let i = 0; i <= shipLength; i++) {
         let currentRow = yRow.at(columnIndex + i);
-        this._board[currentRow + column] = true;
+        let key = currentRow + column;
+        this._board[key] = true;
       }
     } else {
+      //check out of bound
+      if (column + shipLength > 10) {
+        return "Ship out of bound";
+      }
       for (let i = 1; i <= shipLength; i++) {
         this._board[row + i] = true;
       }
