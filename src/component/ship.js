@@ -5,7 +5,7 @@
 // 4	Submarine	      3
 // 5	Patrol Boat	      2
 
-class Ship {
+export class Ship {
   constructor(shipLength) {
     this._shipLength = shipLength;
     this._hit = 0;
@@ -19,6 +19,10 @@ class Ship {
     return this._hit;
   }
 
+  getShipLength() {
+    return this._shipLength;
+  }
+
   isSunk() {
     if (this._hit == this._shipLength) {
       return true;
@@ -27,10 +31,3 @@ class Ship {
     }
   }
 }
-
-const carrier = new Ship(5);
-carrier.hit();
-carrier.hit();
-carrier.hit();
-carrier.getHit();
-carrier.isSunk();
