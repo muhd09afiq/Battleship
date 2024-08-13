@@ -24,7 +24,7 @@ export class Ship {
   }
 
   isSunk() {
-    if (this._hit == this._shipLength) {
+    if (this._hit >= this._shipLength) {
       return true;
     } else {
       return false;

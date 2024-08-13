@@ -30,7 +30,7 @@ describe("Ship", () => {
     expect(ship.isSunk()).toBe(false);
   });
 
-  test("should not sink if hit count exceeds ship length", () => {
+  test("should sink if hit count exceeds ship length", () => {
     ship.hit();
     ship.hit();
     ship.hit();
