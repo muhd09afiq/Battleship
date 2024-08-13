@@ -40,7 +40,7 @@ export class Gameboard {
       if (columnIndex + shipLength > yRow.length) {
         return "Ship out of bound";
       }
-      for (let i = 0; i <= shipLength; i++) {
+      for (let i = 0; i < shipLength; i++) {
         let currentRow = yRow.at(columnIndex + i);
         let key = currentRow + column;
         this._board[key] = true;
@@ -50,7 +50,7 @@ export class Gameboard {
       if (column + shipLength > 10) {
         return "Ship out of bound";
       }
-      for (let i = 0; i <= shipLength; i++) {
+      for (let i = 0; i < shipLength; i++) {
         let currentColumn = i + column;
         let key = row + currentColumn;
         this._board[key] = true;

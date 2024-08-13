@@ -29,6 +29,7 @@ describe("Board", () => {
     expect(board.getCoordinateStatus("A1")).toBe(true);
     expect(board.getCoordinateStatus("A2")).toBe(true);
     expect(board.getCoordinateStatus("A3")).toBe(true);
+    expect(board.getCoordinateStatus("A4")).toBe(null);
   });
 
   test("should be able to place ship vertically", () => {
