@@ -43,7 +43,7 @@ export class Gameboard {
       for (let i = 0; i <= shipLength; i++) {
         let currentRow = yRow.at(columnIndex + i);
         let key = currentRow + column;
-        this._board[key] = true;
+        this._board[key] = ship;
       }
     } else {
       //check out of bound
@@ -53,10 +53,12 @@ export class Gameboard {
       for (let i = 0; i <= shipLength; i++) {
         let currentColumn = i + column;
         let key = row + currentColumn;
-        this._board[key] = true;
+        this._board[key] = ship;
       }
     }
   }
 
-  receiveAttack() {}
+  receiveAttack(row, column) {
+    ship.getHit();
+  }
 }
