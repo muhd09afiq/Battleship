@@ -30,6 +30,7 @@ export class Gameboard {
 
   placeShip(ship, row, column, vertical = false) {
     const shipLength = ship.getShipLength();
+    column = Number(column);
 
     if (vertical) {
       let yRow = "ABCDEFGHIJ";
@@ -49,9 +50,13 @@ export class Gameboard {
       if (column + shipLength > 10) {
         return "Ship out of bound";
       }
-      for (let i = 1; i <= shipLength; i++) {
-        this._board[row + i] = true;
+      for (let i = 0; i <= shipLength; i++) {
+        let currentColumn = i + column;
+        let key = row + currentColumn;
+        this._board[key] = true;
       }
     }
   }
+
+  receiveAttack() {}
 }
