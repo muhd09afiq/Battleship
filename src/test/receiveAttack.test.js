@@ -41,6 +41,7 @@ describe("Receive Attack Test", () => {
     board.placeShip(ship, "A", 1);
     board.receiveAttack("A1");
     board.receiveAttack("A2");
-    expect(board.receiveAttack("A3")).toBe("game end");
+    board.receiveAttack("A3");
+    expect(board.getAllShipStatus()).toBe("game end");
   });
 });

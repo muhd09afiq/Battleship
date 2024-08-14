@@ -7,6 +7,7 @@ export class Gameboard {
   constructor() {
     this._board = {};
     this.createBoard();
+    this._activeShip = [];
   }
 
   createBoard() {
@@ -40,6 +41,7 @@ export class Gameboard {
       if (columnIndex + shipLength > yRow.length) {
         return "Ship out of bound";
       }
+      updateShip(ship);
       for (let i = 0; i < shipLength; i++) {
         let currentRow = yRow.at(columnIndex + i);
         let key = currentRow + column;
@@ -50,12 +52,17 @@ export class Gameboard {
       if (column + shipLength > 10) {
         return "Ship out of bound";
       }
+      updateShip(ship);
       for (let i = 0; i < shipLength; i++) {
         let currentColumn = i + column;
         let key = row + currentColumn;
         this._board[key] = ship;
       }
     }
+  }
+
+  updateShip(ship) {
+    this._activeShip.push(ship);
   }
 
   receiveAttack(coordinate) {
@@ -66,8 +73,17 @@ export class Gameboard {
       return "hit";
     } else {
       this._board[coordinate] = "miss"; // Mark as miss
-      this._missedShots.push(coordinate);
       return "miss";
     }
+  }
+
+  getAllShipStatus() {
+    const activeShip = this._activeShip;
+    const shipCount = activeShip.length;
+    activeShip.forEach((ship) => {
+      if (ship.isSunk() == true) {
+      }
+    });
+    return "game end";
   }
 }
