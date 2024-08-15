@@ -44,4 +44,22 @@ describe("Receive Attack Test", () => {
     board.receiveAttack("A3");
     expect(board.getAllShipStatus()).toBe("game end");
   });
+
+  test("should not report if all ship has sunk", () => {
+    board.placeShip(ship, "A", 1);
+    board.receiveAttack("A1");
+    board.receiveAttack("A2");
+    board.receiveAttack("A3");
+    board.placeShip(ship2, "C", 1);
+    expect(board.getAllShipStatus()).toBe("1 ship still alive");
+  });
+
+  test("should return arrray of missed hit coordinates", () => {
+    board.placeShip(ship, "A", 1);
+    board.receiveAttack("A1");
+    board.receiveAttack("A2");
+    board.receiveAttack("B3");
+    board.receiveAttack("H4");
+    expect(board.getMissedHitCoordinate()).toStrictEqual(["B3", "H4"]);
+  });
 });

@@ -8,6 +8,7 @@ export class Gameboard {
     this._board = {};
     this.createBoard();
     this._activeShip = [];
+    this._missedHitCoordinate = [];
   }
 
   createBoard() {
@@ -41,7 +42,7 @@ export class Gameboard {
       if (columnIndex + shipLength > yRow.length) {
         return "Ship out of bound";
       }
-      updateShip(ship);
+      this.updateShip(ship);
       for (let i = 0; i < shipLength; i++) {
         let currentRow = yRow.at(columnIndex + i);
         let key = currentRow + column;
@@ -52,7 +53,7 @@ export class Gameboard {
       if (column + shipLength > 10) {
         return "Ship out of bound";
       }
-      updateShip(ship);
+      this.updateShip(ship);
       for (let i = 0; i < shipLength; i++) {
         let currentColumn = i + column;
         let key = row + currentColumn;
@@ -73,6 +74,7 @@ export class Gameboard {
       return "hit";
     } else {
       this._board[coordinate] = "miss"; // Mark as miss
+      this._missedHitCoordinate.push(coordinate);
       return "miss";
     }
   }
@@ -80,10 +82,20 @@ export class Gameboard {
   getAllShipStatus() {
     const activeShip = this._activeShip;
     const shipCount = activeShip.length;
+    let currentCount = 0;
     activeShip.forEach((ship) => {
       if (ship.isSunk() == true) {
+        currentCount += 1;
       }
     });
-    return "game end";
+    if (currentCount == shipCount) {
+      return "game end";
+    } else {
+      return `${shipCount - currentCount} ship still alive`;
+    }
+  }
+
+  getMissedHitCoordinate() {
+    return this._missedHitCoordinate;
   }
 }
