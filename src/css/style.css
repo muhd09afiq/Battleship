@@ -7,8 +7,7 @@
   gap: 2.5rem;
 }
 
-#grid-container,
-#grid-container-p2 {
+.grid-container {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
@@ -16,8 +15,7 @@
   width: 400px;
   height: 400px;
 }
-.grid-square-p1,
-.grid-square-p2 {
+.grid-square {
   display: flex;
   justify-content: center;
   align-items: center;
