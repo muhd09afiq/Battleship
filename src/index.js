@@ -1,5 +1,6 @@
 import "./css/reset.css";
 import "./css/style.css";
-import { createGrid } from "./DOM/grid";
+import { createGridPlayer1, createGridPlayer2 } from "./DOM/grid";
 
-createGrid();
+createGridPlayer1();
+createGridPlayer2();
