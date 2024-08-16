@@ -41,7 +41,7 @@ export class Gameboard {
       let columnIndex = yRow.indexOf(row);
       //check out of bound
       if (columnIndex + shipLength > yRow.length) {
-        return "Ship out of bound";
+        throw new Error("Ship out of bound");
       }
       this.updateShip(ship);
       for (let i = 0; i < shipLength; i++) {
@@ -53,7 +53,7 @@ export class Gameboard {
     } else {
       //check out of bound
       if (column + shipLength > 10) {
-        return "Ship out of bound";
+        throw new Error("Ship out of bound");
       }
       this.updateShip(ship);
       for (let i = 0; i < shipLength; i++) {

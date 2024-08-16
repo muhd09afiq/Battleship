@@ -1,6 +1,7 @@
 export class CreateGrid {
-  constructor(player) {
+  constructor(player, gameboard) {
     this.player = player;
+    this.gameboard = gameboard;
   }
 
   createContainer() {
@@ -21,9 +22,17 @@ export class CreateGrid {
         const cell = document.createElement("div");
         cell.classList.add("grid-square");
         cell.id = `${this.player}-${yLabels[row]}${xLabels[col]}`;
-
+        const coordinate = `${yLabels[row]}${xLabels[col]}`;
         gridContainer.appendChild(cell);
+        this.addEventListener(cell, coordinate);
       }
     }
+  }
+
+  addEventListener(cell, coordinate) {
+    cell.addEventListener("click", () => {
+      const attack = this.gameboard.receiveAttack(coordinate);
+      console.log(attack);
+    });
   }
 }
