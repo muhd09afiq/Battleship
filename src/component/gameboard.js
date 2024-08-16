@@ -4,7 +4,8 @@ export class Gameboard {
   //10x10 grid
   //y = ABC,DEF,GHI,J
   //x = 123,456,789,10
-  constructor() {
+  constructor(player) {
+    this._player = player;
     this._board = {};
     this.createBoard();
     this._activeShip = [];
@@ -47,6 +48,7 @@ export class Gameboard {
         let currentRow = yRow.at(columnIndex + i);
         let key = currentRow + column;
         this._board[key] = ship;
+        this.updateShipToDOM(key);
       }
     } else {
       //check out of bound
@@ -58,12 +60,18 @@ export class Gameboard {
         let currentColumn = i + column;
         let key = row + currentColumn;
         this._board[key] = ship;
+        this.updateShipToDOM(key);
       }
     }
   }
 
   updateShip(ship) {
     this._activeShip.push(ship);
+  }
+
+  updateShipToDOM(key) {
+    const shipDiv = document.getElementById(`${this._player}-${key}`);
+    shipDiv.style.backgroundColor = "black";
   }
 
   receiveAttack(coordinate) {
