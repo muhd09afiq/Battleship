@@ -1,1 +1,3 @@
-export class GameMaster {}
+export class GameMaster {
+  constructor() {}
+}
