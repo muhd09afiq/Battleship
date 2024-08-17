@@ -29,3 +29,10 @@ game flow:
 
 1. show a screen for board placement
 2. for now, only randomize placement with a button to randomize
+
+gameboard->placeship->createGrid
+
+GameMaster will randomly place ship for player
+GameMaster purpose:
+create player and board
+place ship for player
