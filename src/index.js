@@ -34,8 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
   //place ship player1
   player1Board.placeShip(carrier1, "C", 10, true);
   player1Board.placeShip(battleship1, "B", 3);
-  player1Board.placeShip(destroyer1, "C", 3);
-  player1Board.placeShip(submarine1, "D", 3);
+  player1Board.placeShip(destroyer1, "J", 3);
+  player1Board.placeShip(submarine1, "A", 3, true);
   player1Board.placeShip(boat1, "E", 3);
   //
   player2Board.placeShip(carrier2, "C", 10, true);

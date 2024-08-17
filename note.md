@@ -18,3 +18,4 @@ flow:
 task:
 
 ~~1. after placing the ship, show it location on the UI~~
+only show ship location for player, not computer
