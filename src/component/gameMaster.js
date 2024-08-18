@@ -32,4 +32,15 @@ export class GameMaster {
     player.gameboard.placeShip(submarine1, "A", 3, true);
     player.gameboard.placeShip(boat1, "E", 3);
   }
+
+  playTurn() {
+    //player select grid -> check if all ship sink or not -> cpu select grid -> check if all ship sink or not -> repeat
+    if (this.gameOver) return;
+  }
+
+  cpuPlayTurn() {}
+
+  switchTurn() {}
+
+  checkGameOver() {}
 }
