@@ -16,6 +16,7 @@ export class GameMaster {
     this.playerCPU.gameboard = new Gameboard("CPU");
 
     this.placeShip(this.playerHuman);
+    this.placeShip(this.playerCPU);
   }
 
   placeShip(player) {

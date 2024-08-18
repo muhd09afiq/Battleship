@@ -4,7 +4,10 @@
 
 .wrapper {
   display: flex;
-  gap: 2.5rem;
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center */
+  gap: 80px;
+  height: 80vh;
 }
 
 .grid-container {

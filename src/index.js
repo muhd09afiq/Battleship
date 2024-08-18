@@ -1,60 +1,51 @@
 import "./css/reset.css";
 import "./css/style.css";
 import { CreateGrid } from "./DOM/grid";
-import { Gameboard } from "./component/gameboard";
-import { Ship } from "./component/ship";
 import { GameMaster } from "./component/gameMaster";
 
-// //player1 ship
-// const carrier1 = new Ship(5);
-// const battleship1 = new Ship(4);
-// const destroyer1 = new Ship(3);
-// const submarine1 = new Ship(3);
-// const boat1 = new Ship(2);
-// //player2 ship
-// const carrier2 = new Ship(5);
-// const battleship2 = new Ship(4);
-// const destroyer2 = new Ship(3);
-// const submarine2 = new Ship(3);
-// const boat2 = new Ship(2);
-
-// const player1Board = new Gameboard("player1");
-// const player2Board = new Gameboard("player2");
-
-// const player1 = new CreateGrid("player1", player1Board);
-// const player2 = new CreateGrid("player2", player2Board);
-
-// document.addEventListener("DOMContentLoaded", function () {
-//   //create DOM container
-//   player1.createContainer();
-//   player1.createGridPlayer();
-//   player2.createContainer();
-//   player2.createGridPlayer();
-//   //create object board
-//   player1Board.createBoard();
-//   //place ship player1
-//   player1Board.placeShip(carrier1, "C", 10, true);
-//   player1Board.placeShip(battleship1, "B", 3);
-//   player1Board.placeShip(destroyer1, "J", 3);
-//   player1Board.placeShip(submarine1, "A", 3, true);
-//   player1Board.placeShip(boat1, "E", 3);
-//   //
-//   player2Board.placeShip(carrier2, "C", 10, true);
-//   player2Board.placeShip(battleship2, "B", 3);
-//   player2Board.placeShip(destroyer2, "C", 3);
-//   player2Board.placeShip(submarine2, "D", 3);
-//   player2Board.placeShip(boat2, "E", 3);
-// });
-
-const dialog = document.querySelector("dialog");
-const previewGrid = document.querySelector(".grid-container");
+//initialize game and show player board preview
 const newGame = new GameMaster();
 newGame.initializeBoard();
+const playerCPU = newGame.playerCPU;
+const playerHuman = newGame.playerHuman;
 
-const grid1 = new CreateGrid(
-  newGame.playerHuman,
-  newGame.playerHuman.gameboard
-);
+const dialog = document.querySelector("dialog");
+const previewGridContainer = document.querySelector(".grid-container");
+
+const playerBoard = playerHuman.gameboard;
+const cpuBoard = playerCPU.gameboard;
+
+//preview grid
+const previewGrid = new CreateGrid(playerHuman, playerBoard);
 dialog.showModal();
-grid1.createGridPlayer(previewGrid);
-grid1.updateShipToDOM(newGame.playerHuman.gameboard);
+previewGrid.createGridPlayer(playerHuman, previewGridContainer);
+previewGrid.updateShipToDOM(playerHuman, playerBoard); //show ship location on player grid
+
+//disable closing modal
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && dialog.open) {
+    event.preventDefault();
+  }
+});
+
+//game start
+const startGameBtn = document.querySelector("#start-game");
+startGameBtn.addEventListener("click", () => {
+  dialog.close();
+
+  //create player and cpu board
+  const playerGrid = new CreateGrid(playerHuman, playerBoard);
+  const cpuGrid = new CreateGrid(playerCPU, cpuBoard);
+
+  cpuGrid.changeBoardPreview(); //only enable event listener on cpu grid
+
+  const playerContainer = document.getElementById("player-grid");
+  const cpuContainer = document.getElementById("cpu-grid");
+  playerContainer.classList.add("grid-container");
+  cpuContainer.classList.add("grid-container");
+
+  // playerGrid.updateShipToDOM(playerBoard);
+  playerGrid.createGridPlayer(playerHuman, playerContainer);
+  cpuGrid.createGridPlayer(playerCPU, cpuContainer);
+  playerGrid.updateShipToDOM(playerHuman, playerBoard);
+});

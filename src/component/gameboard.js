@@ -92,12 +92,12 @@ export class Gameboard {
   }
 
   updateMissToDOM(coordinate) {
-    const missDiv = document.getElementById(`${this._player}-${coordinate}`);
+    const missDiv = document.getElementById(`CPU-${coordinate}`);
     missDiv.style.backgroundColor = "grey";
   }
 
   updateHitToDOM(coordinate) {
-    const hitDiv = document.getElementById(`${this._player}-${coordinate}`);
+    const hitDiv = document.getElementById(`CPU-${coordinate}`);
     hitDiv.style.backgroundColor = "red";
   }
 
