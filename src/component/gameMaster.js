@@ -1,3 +1,4 @@
+import { Gameboard } from "./gameboard";
 import { Player } from "./player";
 
 export class GameMaster {
@@ -11,5 +12,9 @@ export class GameMaster {
   initializeBoard() {
     this.playerHuman = new Player("Human");
     this.playerCPU = new Player("CPU");
+    this.playerHuman.gameboard = new Gameboard("Human");
+    this.playerCPU.gameboard = new Gameboard("CPU");
   }
+
+  placeShip() {}
 }
