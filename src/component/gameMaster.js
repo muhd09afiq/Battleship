@@ -2,6 +2,7 @@ import { Gameboard } from "./gameboard";
 import { Player } from "./player";
 import { Ship } from "./ship";
 import { CreateGrid } from "../DOM/grid";
+import { sub } from "date-fns";
 
 export class GameMaster {
   constructor() {
@@ -66,12 +67,44 @@ export class GameMaster {
     const destroyer1 = new Ship(3);
     const submarine1 = new Ship(3);
     const boat1 = new Ship(2);
+    const shipArray = [carrier1, battleship1, destroyer1, submarine1, boat1];
 
-    player.gameboard.placeShip(carrier1, "C", 10, true);
-    player.gameboard.placeShip(destroyer1, "J", 3);
-    player.gameboard.placeShip(battleship1, "F", 3);
-    player.gameboard.placeShip(submarine1, "A", 3, true);
-    player.gameboard.placeShip(boat1, "E", 3);
+    shipArray.forEach((ship) => {
+      const result = this.provideRandomizeInputForShipPlacement();
+      const columnInput = Math.floor(Math.random() * 10);
+      console.log(columnInput);
+      if (
+        player.gameboard.placeShip(
+          ship,
+          result.rowInput,
+          columnInput,
+          result.verticalInput
+        )
+      ) {
+      }
+    });
+
+    // player.gameboard.placeShip(carrier1, "C", 10, true);
+    // player.gameboard.placeShip(destroyer1, "J", 3);
+    // player.gameboard.placeShip(battleship1, "F", 3);
+    // player.gameboard.placeShip(submarine1, "A", 3, true);
+    // player.gameboard.placeShip(boat1, "E", 3);
+  }
+
+  provideRandomizeInputForShipPlacement() {
+    //need row input, column input, vertical input
+    let row = "ABCDEFGHIJ";
+    row = row.split("");
+    const randomIndex = Math.floor(Math.random() * row.length);
+    const rowInput = row[randomIndex];
+
+    const verticalDecider = Math.floor(Math.random);
+    let verticalInput;
+    if (verticalDecider > 5) {
+      verticalInput = true;
+    }
+
+    return { rowInput, verticalInput };
   }
 
   startGame() {
