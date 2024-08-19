@@ -1,4 +1,5 @@
 import { Ship } from "./ship";
+import { GameMaster } from "./gameMaster";
 
 export class Gameboard {
   //10x10 grid
