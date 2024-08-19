@@ -44,25 +44,31 @@ export class Gameboard {
       if (columnIndex + shipLength > yRow.length) {
         throw new Error("Ship out of bound");
       }
-      this.updateShip(ship);
       for (let i = 0; i < shipLength; i++) {
         let currentRow = yRow.at(columnIndex + i);
         let key = currentRow + column;
+        if (this._board[key] !== null) {
+          throw new Error(`Coordinate ${key} already occupied`);
+        }
         this._board[key] = ship;
         // this.updateShipToDOM(key);
       }
+      this.updateShip(ship);
     } else {
       //check out of bound
       if (column + shipLength > 10) {
         throw new Error("Ship out of bound");
       }
-      this.updateShip(ship);
       for (let i = 0; i < shipLength; i++) {
         let currentColumn = i + column;
         let key = row + currentColumn;
+        if (this._board[key] !== null) {
+          throw new Error(`Coordinate ${key} already occupied`);
+        }
         this._board[key] = ship;
         // this.updateShipToDOM(key);
       }
+      this.updateShip(ship);
     }
   }
 
@@ -107,14 +113,15 @@ export class Gameboard {
     const shipCount = activeShip.length;
     let currentCount = 0;
     activeShip.forEach((ship) => {
-      if (ship.isSunk() == true) {
+      if (ship.isSunk() === true) {
         currentCount += 1;
       }
     });
-    if (currentCount == shipCount) {
-      return "game end";
+    console.log(activeShip);
+    if (currentCount === shipCount) {
+      return false; //game over
     } else {
-      return `${shipCount - currentCount} ship still alive`;
+      return true; //game continue
     }
   }
 

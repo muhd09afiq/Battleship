@@ -67,14 +67,53 @@ export class GameMaster {
 
     player.gameboard.placeShip(carrier1, "C", 10, true);
     player.gameboard.placeShip(destroyer1, "J", 3);
-    player.gameboard.placeShip(battleship1, "B", 3);
+    player.gameboard.placeShip(battleship1, "F", 3);
     player.gameboard.placeShip(submarine1, "A", 3, true);
     player.gameboard.placeShip(boat1, "E", 3);
+  }
+
+  startGame() {
+    const startGameBtn = document.querySelector("#start-game");
+    startGameBtn.addEventListener("click", () => {
+      console.log("Game Start");
+      this.addEventListenerToCpuCell();
+    });
+  }
+
+  addEventListenerToCpuCell() {
+    const xLabels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+    const yLabels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+    const playerCPU = this.playerCPU;
+    const cpuBoard = playerCPU.gameboard;
+
+    for (let row = 0; row < 10; row++) {
+      for (let col = 0; col < 10; col++) {
+        const cell = document.getElementById(
+          `${playerCPU.name}-${yLabels[row]}${xLabels[col]}`
+        );
+        const coordinate = `${yLabels[row]}${xLabels[col]}`;
+        cell.addEventListener("click", () => {
+          const attack = cpuBoard.receiveAttack(coordinate);
+          console.log(attack);
+          if (cpuBoard.getAllShipStatus()) {
+            console.log("Ship still alive, continue game");
+            this.cpuPlayTurn();
+          } else {
+            console.log("All ship destroyed, game end");
+          }
+        });
+      }
+    }
   }
 
   playTurn() {
     //player select grid -> check if all ship sink or not -> cpu select grid -> check if all ship sink or not -> repeat
     if (this.gameOver) return;
+    const playerCPU = this.playerCPU;
+    const playerHuman = this.playerHuman;
+    const playerBoard = playerHuman.gameboard;
+    const cpuBoard = playerCPU.gameboard;
+    const playerAttack = cpuBoard();
   }
 
   cpuPlayTurn() {}

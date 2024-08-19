@@ -25,9 +25,9 @@ export class CreateGrid {
         cell.id = `${player.name}-${yLabels[row]}${xLabels[col]}`;
         const coordinate = `${yLabels[row]}${xLabels[col]}`;
         parent.appendChild(cell);
-        if (this.boardPreview == false) {
-          this.addEventListener(cell, coordinate);
-        }
+        // if (this.boardPreview == false) {
+        //   this.addEventListener(cell, coordinate);
+        // }
       }
     }
   }
@@ -40,6 +40,11 @@ export class CreateGrid {
     cell.addEventListener("click", () => {
       const attack = this.gameboard.receiveAttack(coordinate);
       console.log(attack);
+      if (this.gameboard.getAllShipStatus()) {
+        console.log("Ship still alive, continue game");
+      } else {
+        console.log("All ship destroyed, game end");
+      }
     });
   }
 
