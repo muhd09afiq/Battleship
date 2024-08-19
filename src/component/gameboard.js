@@ -27,6 +27,10 @@ export class Gameboard {
     return this._board;
   }
 
+  getPlayer() {
+    return this._player;
+  }
+
   getCoordinateStatus(coordinate) {
     let currentStatus = this._board[coordinate];
     return currentStatus;
@@ -88,7 +92,7 @@ export class Gameboard {
       this._board[coordinate] = "hit"; // Mark as hit
       this.updateHitToDOM(coordinate);
       return "hit";
-    } else if (target == "hit") {
+    } else if (target == "hit" || target == "miss") {
       return "already hit";
     } else {
       this._board[coordinate] = "miss"; // Mark as miss
@@ -99,12 +103,14 @@ export class Gameboard {
   }
 
   updateMissToDOM(coordinate) {
-    const missDiv = document.getElementById(`CPU-${coordinate}`);
+    const missDiv = document.getElementById(
+      `${this.getPlayer()}-${coordinate}`
+    );
     missDiv.style.backgroundColor = "grey";
   }
 
   updateHitToDOM(coordinate) {
-    const hitDiv = document.getElementById(`CPU-${coordinate}`);
+    const hitDiv = document.getElementById(`${this.getPlayer()}-${coordinate}`);
     hitDiv.style.backgroundColor = "red";
   }
 
@@ -117,7 +123,6 @@ export class Gameboard {
         currentCount += 1;
       }
     });
-    console.log(activeShip);
     if (currentCount === shipCount) {
       return false; //game over
     } else {

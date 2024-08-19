@@ -8,6 +8,8 @@ export class GameMaster {
     this.playerHuman = new Player("Human");
     this.playerCPU = new Player("CPU");
     this.currentPlayer = this.playerHuman;
+    this.cpuGridArray = [];
+    this.hitArray = [];
     this.gameOver = false;
     this.gameStart = false;
   }
@@ -95,10 +97,10 @@ export class GameMaster {
         cell.addEventListener("click", () => {
           const attack = cpuBoard.receiveAttack(coordinate);
           console.log(attack);
-          if (cpuBoard.getAllShipStatus()) {
+          if (cpuBoard.getAllShipStatus() == true && attack !== "already hit") {
             console.log("Ship still alive, continue game");
             this.cpuPlayTurn();
-          } else {
+          } else if (cpuBoard.getAllShipStatus() == false) {
             console.log("All ship destroyed, game end");
           }
         });
@@ -116,7 +118,21 @@ export class GameMaster {
     const playerAttack = cpuBoard();
   }
 
-  cpuPlayTurn() {}
+  cpuPlayTurn() {
+    const playerBoard = this.playerHuman.gameboard;
+    this.cpuGridArray = Object.keys(playerBoard.getBoard());
+    //delete hit index so that no same coordinate is attack
+    this.hitArray.forEach((index) => {
+      this.cpuGridArray.splice(index, 1);
+    });
+
+    let randomIndex = Math.floor(Math.random() * this.cpuGridArray.length);
+    const randomTarget = this.cpuGridArray[randomIndex];
+    this.hitArray.push(randomIndex);
+    console.dir(this.hitArray);
+    console.dir(this.cpuGridArray);
+    playerBoard.receiveAttack(randomTarget);
+  }
 
   switchTurn() {}
 
