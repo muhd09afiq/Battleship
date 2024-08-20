@@ -101,6 +101,7 @@ export class GameMaster {
             console.log(ship.color)
           );
         } catch (error) {
+          console.log(error);
           attempts++;
         }
       }
