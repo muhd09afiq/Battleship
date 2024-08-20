@@ -57,15 +57,16 @@ export class Gameboard {
         if (this._board[key] !== null) {
           tempShipArray = [];
           throw new Error(`Coordinate ${key} already occupied`);
+        } else {
+          tempShipArray.push(key);
+          console.log(tempShipArray);
+          tempShipArray.forEach((coordinate) => {
+            this._board[coordinate] = ship;
+          });
+          console.log(key);
+          this.updateShip(ship);
         }
-        tempShipArray.push(key);
-        console.log(tempShipArray);
-        tempShipArray.forEach((coordinate) => {
-          this._board[coordinate] = ship;
-        });
-        console.log(key);
       }
-      this.updateShip(ship);
     } else {
       let tempShipArray = [];
       //check out of bound
@@ -79,15 +80,16 @@ export class Gameboard {
         if (this._board[key] !== null) {
           tempShipArray = [];
           throw new Error(`Coordinate ${key} already occupied`);
+        } else {
+          tempShipArray.push(key);
+          console.log(tempShipArray);
+          tempShipArray.forEach((coordinate) => {
+            this._board[coordinate] = ship;
+          });
+          console.log(key);
+          this.updateShip(ship);
         }
-        tempShipArray.push(key);
-        console.log(tempShipArray);
-        tempShipArray.forEach((coordinate) => {
-          this._board[coordinate] = ship;
-        });
-        console.log(key);
       }
-      this.updateShip(ship);
     }
   }
 
