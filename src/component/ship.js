@@ -6,9 +6,10 @@
 // 5	Patrol Boat	      2
 
 export class Ship {
-  constructor(shipLength) {
+  constructor(shipLength, color) {
     this._shipLength = shipLength;
     this._hit = 0;
+    this.color = color;
   }
 
   hit() {

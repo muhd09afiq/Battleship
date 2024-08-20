@@ -54,7 +54,8 @@ export class CreateGrid {
     for (let key in gameBoard) {
       if (gameBoard[key] !== null) {
         const shipDiv = document.getElementById(`${player.name}-${key}`);
-        shipDiv.style.backgroundColor = "black";
+        const shipObj = gameBoard[key];
+        shipDiv.style.backgroundColor = shipObj.color;
       }
     }
   }

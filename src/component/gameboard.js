@@ -11,6 +11,7 @@ export class Gameboard {
     this.createBoard();
     this._activeShip = [];
     this._missedHitCoordinate = [];
+    this.shipCoordinate = [];
   }
 
   createBoard() {
@@ -41,21 +42,26 @@ export class Gameboard {
     column = Number(column);
 
     if (vertical) {
+      let tempShipArray = [];
       let yRow = "ABCDEFGHIJ";
       yRow = yRow.split("");
-      let columnIndex = yRow.indexOf(row);
+      let rowIndex = yRow.indexOf(row);
       //check out of bound
-      if (columnIndex + shipLength > yRow.length) {
+      if (rowIndex + shipLength > yRow.length) {
         throw new Error("Ship out of bound");
       }
       for (let i = 0; i < shipLength; i++) {
-        let currentRow = yRow.at(columnIndex + i);
+        let currentRow = yRow.at(rowIndex + i);
         let key = currentRow + column;
         if (this._board[key] !== null) {
+          tempShipArray = [];
           throw new Error(`Coordinate ${key} already occupied`);
         }
-        this._board[key] = ship;
-        // this.updateShipToDOM(key);
+        tempShipArray.push(key);
+        tempShipArray.forEach((coordinate) => {
+          this._board[coordinate] = ship;
+        });
+        console.log(key);
       }
       this.updateShip(ship);
     } else {
@@ -63,14 +69,19 @@ export class Gameboard {
       if (column + shipLength > 10) {
         throw new Error("Ship out of bound");
       }
+      let tempShipArray = [];
       for (let i = 0; i < shipLength; i++) {
         let currentColumn = i + column;
         let key = row + currentColumn;
         if (this._board[key] !== null) {
+          tempShipArray = [];
           throw new Error(`Coordinate ${key} already occupied`);
         }
-        this._board[key] = ship;
-        // this.updateShipToDOM(key);
+        tempShipArray.push(key);
+        tempShipArray.forEach((coordinate) => {
+          this._board[coordinate] = ship;
+        });
+        console.log(key);
       }
       this.updateShip(ship);
     }
