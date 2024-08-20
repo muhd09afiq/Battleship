@@ -19,13 +19,13 @@ export class GameMaster {
     this.playerHuman.gameboard = new Gameboard("Human");
     this.playerCPU.gameboard = new Gameboard("CPU");
     //assign player and board
-    const playerCPU = this.playerCPU;
+
     const playerHuman = this.playerHuman;
     const playerBoard = playerHuman.gameboard;
-    const cpuBoard = playerCPU.gameboard;
 
     this.placeShip(this.playerHuman);
     this.placeShip(this.playerCPU);
+
     //preview grid
     const dialog = document.querySelector("dialog");
     //disable closing modal
@@ -44,6 +44,8 @@ export class GameMaster {
     startGameBtn.addEventListener("click", () => {
       dialog.close();
       //create player and cpu board
+      const playerCPU = this.playerCPU;
+      const cpuBoard = playerCPU.gameboard;
       const playerGrid = new CreateGrid(playerHuman, playerBoard);
       const cpuGrid = new CreateGrid(playerCPU, cpuBoard);
 
@@ -59,36 +61,52 @@ export class GameMaster {
       cpuGrid.createGridPlayer(playerCPU, cpuContainer);
       playerGrid.updateShipToDOM(playerHuman, playerBoard);
     });
+    //randomize button
+    const randomBtn = document.getElementById("randomizeShip");
+    randomBtn.addEventListener("click", () => {
+      let board = playerBoard.getBoard();
+      board = null;
+      playerBoard.createBoard();
+      this.placeShip(this.playerHuman);
+
+      previewGrid.updateShipToDOM(playerHuman, playerBoard);
+    });
   }
 
   placeShip(player) {
-    const carrier1 = new Ship(5);
-    const battleship1 = new Ship(4);
-    const destroyer1 = new Ship(3);
-    const submarine1 = new Ship(3);
-    const boat1 = new Ship(2);
+    const carrier1 = new Ship(5, "grey");
+    const battleship1 = new Ship(4, "purple");
+    const destroyer1 = new Ship(3, "red");
+    const submarine1 = new Ship(3, "black");
+    const boat1 = new Ship(2, "blue");
     const shipArray = [carrier1, battleship1, destroyer1, submarine1, boat1];
 
     shipArray.forEach((ship) => {
-      const result = this.provideRandomizeInputForShipPlacement();
-      const columnInput = Math.floor(Math.random() * 10);
-      console.log(columnInput);
-      if (
-        player.gameboard.placeShip(
-          ship,
-          result.rowInput,
-          columnInput,
-          result.verticalInput
-        )
-      ) {
+      let attempts = 0;
+      while (attempts < 10) {
+        try {
+          const result = this.provideRandomizeInputForShipPlacement();
+
+          let columnInput = Math.floor(Math.random() * 11);
+          player.gameboard.placeShip(
+            ship,
+            result.rowInput,
+            columnInput,
+            result.verticalInput
+          );
+
+          return (
+            console.log(result.rowInput),
+            console.log(columnInput),
+            console.log(ship.color)
+          );
+        } catch (error) {
+          attempts++;
+        }
       }
     });
-
-    // player.gameboard.placeShip(carrier1, "C", 10, true);
-    // player.gameboard.placeShip(destroyer1, "J", 3);
-    // player.gameboard.placeShip(battleship1, "F", 3);
-    // player.gameboard.placeShip(submarine1, "A", 3, true);
-    // player.gameboard.placeShip(boat1, "E", 3);
+    console.log(player.gameboard.getPlayer());
+    console.dir(player.gameboard.getBoard());
   }
 
   provideRandomizeInputForShipPlacement() {
@@ -98,8 +116,8 @@ export class GameMaster {
     const randomIndex = Math.floor(Math.random() * row.length);
     const rowInput = row[randomIndex];
 
-    const verticalDecider = Math.floor(Math.random);
-    let verticalInput;
+    const verticalDecider = Math.floor(Math.random() * 10);
+    let verticalInput = false;
     if (verticalDecider > 5) {
       verticalInput = true;
     }

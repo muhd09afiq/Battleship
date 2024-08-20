@@ -6,8 +6,10 @@
   display: flex;
   justify-content: center; /* Horizontally center */
   align-items: center; /* Vertically center */
-  gap: 80px;
   height: 80vh;
+  gap: 0.625rem;
+  flex-wrap: wrap;
+  margin-top: 10px;
 }
 
 .grid-container {
@@ -15,9 +17,10 @@
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
   gap: 1px;
-  width: 400px;
-  height: 400px;
+  width: 300px;
+  height: 300px;
 }
+
 .grid-square {
   display: flex;
   justify-content: center;
