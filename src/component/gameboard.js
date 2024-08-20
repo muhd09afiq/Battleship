@@ -48,6 +48,7 @@ export class Gameboard {
       let rowIndex = yRow.indexOf(row);
       //check out of bound
       if (rowIndex + shipLength > yRow.length) {
+        tempShipArray = [];
         throw new Error("Ship out of bound");
       }
       for (let i = 0; i < shipLength; i++) {
@@ -58,6 +59,7 @@ export class Gameboard {
           throw new Error(`Coordinate ${key} already occupied`);
         }
         tempShipArray.push(key);
+        console.log(tempShipArray);
         tempShipArray.forEach((coordinate) => {
           this._board[coordinate] = ship;
         });
@@ -65,11 +67,12 @@ export class Gameboard {
       }
       this.updateShip(ship);
     } else {
+      let tempShipArray = [];
       //check out of bound
       if (column + shipLength > 10) {
+        tempShipArray = [];
         throw new Error("Ship out of bound");
       }
-      let tempShipArray = [];
       for (let i = 0; i < shipLength; i++) {
         let currentColumn = i + column;
         let key = row + currentColumn;
@@ -78,6 +81,7 @@ export class Gameboard {
           throw new Error(`Coordinate ${key} already occupied`);
         }
         tempShipArray.push(key);
+        console.log(tempShipArray);
         tempShipArray.forEach((coordinate) => {
           this._board[coordinate] = ship;
         });
