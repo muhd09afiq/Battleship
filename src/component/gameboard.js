@@ -60,13 +60,12 @@ export class Gameboard {
         } else {
           tempShipArray.push(key);
           console.log(tempShipArray);
-          tempShipArray.forEach((coordinate) => {
-            this._board[coordinate] = ship;
-          });
-          console.log(key);
-          this.updateShip(ship);
         }
       }
+      tempShipArray.forEach((coordinate) => {
+        this._board[coordinate] = ship;
+      });
+      this.updateShip(ship);
     } else {
       let tempShipArray = [];
       //check out of bound
@@ -83,13 +82,12 @@ export class Gameboard {
         } else {
           tempShipArray.push(key);
           console.log(tempShipArray);
-          tempShipArray.forEach((coordinate) => {
-            this._board[coordinate] = ship;
-          });
-          console.log(key);
-          this.updateShip(ship);
         }
       }
+      tempShipArray.forEach((coordinate) => {
+        this._board[coordinate] = ship;
+      });
+      this.updateShip(ship);
     }
   }
 
