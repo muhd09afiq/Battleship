@@ -39,7 +39,7 @@ export class GameMaster {
     const previewGrid = new CreateGrid(playerHuman, playerBoard);
     previewGrid.createGridPlayer(playerHuman, previewGridContainer);
     previewGrid.updateShipToDOM(playerHuman, playerBoard);
-    //start
+    //start game
     const startGameBtn = document.querySelector("#start-game");
     startGameBtn.addEventListener("click", () => {
       dialog.close();
@@ -60,23 +60,28 @@ export class GameMaster {
       playerGrid.createGridPlayer(playerHuman, playerContainer);
       cpuGrid.createGridPlayer(playerCPU, cpuContainer);
       playerGrid.updateShipToDOM(playerHuman, playerBoard);
+      // cpuGrid.updateShipToDOM(playerCPU, cpuBoard); enable to view cpu grid
     });
     //randomize button
     const randomBtn = document.getElementById("randomizeShip");
     randomBtn.addEventListener("click", () => {
       let board = playerBoard.getBoard();
-      board = null;
+      board = null; //empty board object
       playerBoard.createBoard();
       this.placeShip(this.playerHuman);
-
+      const cells = document.querySelectorAll(".grid-square");
+      cells.forEach((cell) => {
+        //reset cell color
+        cell.style.backgroundColor = "#f0f0f0";
+      });
       previewGrid.updateShipToDOM(playerHuman, playerBoard);
     });
   }
 
   placeShip(player) {
-    const carrier1 = new Ship(5, "grey");
+    const carrier1 = new Ship(5, "#a87132");
     const battleship1 = new Ship(4, "purple");
-    const destroyer1 = new Ship(3, "red");
+    const destroyer1 = new Ship(3, "#32a8a8");
     const submarine1 = new Ship(3, "black");
     const boat1 = new Ship(2, "blue");
     const shipArray = [carrier1, battleship1, destroyer1, submarine1, boat1];
@@ -95,19 +100,12 @@ export class GameMaster {
             result.verticalInput
           );
 
-          return (
-            console.log(result.rowInput),
-            console.log(columnInput),
-            console.log(ship.color)
-          );
+          return;
         } catch (error) {
-          console.log(error);
           attempts++;
         }
       }
     });
-    console.log(player.gameboard.getPlayer());
-    console.dir(player.gameboard.getBoard());
   }
 
   provideRandomizeInputForShipPlacement() {
@@ -181,8 +179,6 @@ export class GameMaster {
     let randomIndex = Math.floor(Math.random() * this.cpuGridArray.length);
     const randomTarget = this.cpuGridArray[randomIndex];
     this.hitArray.push(randomIndex);
-    console.dir(this.hitArray);
-    console.dir(this.cpuGridArray);
     playerBoard.receiveAttack(randomTarget);
   }
 

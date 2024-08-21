@@ -59,7 +59,6 @@ export class Gameboard {
           throw new Error(`Coordinate ${key} already occupied`);
         } else {
           tempShipArray.push(key);
-          console.log(tempShipArray);
         }
       }
       tempShipArray.forEach((coordinate) => {
@@ -81,7 +80,6 @@ export class Gameboard {
           throw new Error(`Coordinate ${key} already occupied`);
         } else {
           tempShipArray.push(key);
-          console.log(tempShipArray);
         }
       }
       tempShipArray.forEach((coordinate) => {
