@@ -39,12 +39,6 @@ export class CreateGrid {
   addEventListener(cell, coordinate) {
     cell.addEventListener("click", () => {
       const attack = this.gameboard.receiveAttack(coordinate);
-      console.log(attack);
-      if (this.gameboard.getAllShipStatus()) {
-        console.log("Ship still alive, continue game");
-      } else {
-        console.log("All ship destroyed, game end");
-      }
     });
   }
 

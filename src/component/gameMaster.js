@@ -142,7 +142,6 @@ export class GameMaster {
         const coordinate = `${yLabels[row]}${xLabels[col]}`;
         cell.addEventListener("click", () => {
           const attack = cpuBoard.receiveAttack(coordinate);
-          console.log(attack);
           if (cpuBoard.getAllShipStatus() == true && attack !== "already hit") {
             this.cpuPlayTurn();
           } else if (cpuBoard.getAllShipStatus() == false) {
@@ -238,7 +237,6 @@ export class GameMaster {
     playerBoard.receiveAttack(randomTarget);
     //check if cpu win
     if (playerBoard.getAllShipStatus() == false) {
-      console.log("All player ship destroyed, game end");
       this.whoWin = "You Lose!!";
       this.gameEndEvent();
     }
