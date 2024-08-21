@@ -72,6 +72,7 @@ export class GameMaster {
       });
       previewGrid.updateShipToDOM(playerHuman, playerBoard);
     });
+    this.resetGame();
   }
 
   placeShip(player) {
@@ -151,6 +152,37 @@ export class GameMaster {
         });
       }
     }
+  }
+
+  resetGame() {
+    const button = document.getElementById("resetGame");
+    button.addEventListener("click", () => {
+      let playerBoard = this.playerHuman.gameboard;
+      let cpuBoard = this.playerCPU.gameboard;
+
+      const dialogStartGame = document.querySelector("dialog");
+      dialogStartGame.showModal();
+      const playerContainer = document.getElementById("player-grid");
+      const cpuContainer = document.getElementById("cpu-grid");
+      playerContainer.innerHTML = "";
+      cpuContainer.innerHTML = "";
+      this.cpuGridArray = [];
+      this.hitArray = [];
+      playerBoard.createBoard();
+      cpuBoard.createBoard();
+      playerBoard.resetBoard();
+      cpuBoard.resetBoard();
+      const playerHuman = this.playerHuman;
+      this.placeShip(this.playerCPU);
+      this.placeShip(this.playerHuman);
+      const cells = document.querySelectorAll(".grid-square");
+      cells.forEach((cell) => {
+        //reset cell color
+        cell.style.backgroundColor = "#f0f0f0";
+      });
+      const previewGrid = new CreateGrid(playerHuman, playerBoard);
+      previewGrid.updateShipToDOM(playerHuman, playerBoard);
+    });
   }
 
   gameEndEvent() {
