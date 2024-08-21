@@ -130,7 +130,7 @@ export class Gameboard {
 
   updateHitToDOM(coordinate) {
     const hitDiv = document.getElementById(`${this.getPlayer()}-${coordinate}`);
-    hitDiv.style.backgroundColor = "red";
+    hitDiv.style.backgroundColor = "#E4080A";
   }
 
   getAllShipStatus() {
