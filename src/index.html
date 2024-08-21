@@ -3,17 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>BattleShip</title>
   </head>
   <body>
     <div class="wrapper">
       <div id="player-grid"></div>
       <div id="cpu-grid"></div>
+      <button type="button">Reset Game</button>
     </div>
     <dialog id="board-preview">
       <div class="grid-container"></div>
       <button id="start-game" type="button">Start Game</button>
       <button id="randomizeShip" type="button">Randomize Ship</button>
+    </dialog>
+    <dialog id="game-end">
+      <p id="show-winner"></p>
+      <button type="button" id="restartGame">New Game</button>
     </dialog>
   </body>
 </html>
