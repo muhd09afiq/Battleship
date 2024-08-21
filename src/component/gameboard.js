@@ -24,6 +24,12 @@ export class Gameboard {
     });
   }
 
+  resetBoard() {
+    this._activeShip = [];
+    this._missedHitCoordinate = [];
+    this.shipCoordinate = [];
+  }
+
   getBoard() {
     return this._board;
   }

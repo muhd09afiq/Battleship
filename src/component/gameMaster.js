@@ -2,17 +2,16 @@ import { Gameboard } from "./gameboard";
 import { Player } from "./player";
 import { Ship } from "./ship";
 import { CreateGrid } from "../DOM/grid";
-import { sub } from "date-fns";
 
 export class GameMaster {
   constructor() {
     this.playerHuman = new Player("Human");
     this.playerCPU = new Player("CPU");
-    this.currentPlayer = this.playerHuman;
+
     this.cpuGridArray = [];
     this.hitArray = [];
-    this.gameOver = false;
-    this.gameStart = false;
+
+    this.whoWin = "";
   }
 
   initializeBoard() {
@@ -22,6 +21,8 @@ export class GameMaster {
 
     const playerHuman = this.playerHuman;
     const playerBoard = playerHuman.gameboard;
+    const playerCPU = this.playerCPU;
+    const cpuBoard = playerCPU.gameboard;
 
     this.placeShip(this.playerHuman);
     this.placeShip(this.playerCPU);
@@ -44,8 +45,7 @@ export class GameMaster {
     startGameBtn.addEventListener("click", () => {
       dialog.close();
       //create player and cpu board
-      const playerCPU = this.playerCPU;
-      const cpuBoard = playerCPU.gameboard;
+
       const playerGrid = new CreateGrid(playerHuman, playerBoard);
       const cpuGrid = new CreateGrid(playerCPU, cpuBoard);
 
@@ -55,18 +55,14 @@ export class GameMaster {
       const cpuContainer = document.getElementById("cpu-grid");
       playerContainer.classList.add("grid-container");
       cpuContainer.classList.add("grid-container");
-
-      // playerGrid.updateShipToDOM(playerBoard);
       playerGrid.createGridPlayer(playerHuman, playerContainer);
       cpuGrid.createGridPlayer(playerCPU, cpuContainer);
       playerGrid.updateShipToDOM(playerHuman, playerBoard);
-      // cpuGrid.updateShipToDOM(playerCPU, cpuBoard); enable to view cpu grid
+      //cpuGrid.updateShipToDOM(playerCPU, cpuBoard); //enable to view cpu grid
     });
     //randomize button
     const randomBtn = document.getElementById("randomizeShip");
     randomBtn.addEventListener("click", () => {
-      let board = playerBoard.getBoard();
-      board = null; //empty board object
       playerBoard.createBoard();
       this.placeShip(this.playerHuman);
       const cells = document.querySelectorAll(".grid-square");
@@ -127,7 +123,6 @@ export class GameMaster {
   startGame() {
     const startGameBtn = document.querySelector("#start-game");
     startGameBtn.addEventListener("click", () => {
-      console.log("Game Start");
       this.addEventListenerToCpuCell();
     });
   }
@@ -148,24 +143,53 @@ export class GameMaster {
           const attack = cpuBoard.receiveAttack(coordinate);
           console.log(attack);
           if (cpuBoard.getAllShipStatus() == true && attack !== "already hit") {
-            console.log("Ship still alive, continue game");
             this.cpuPlayTurn();
           } else if (cpuBoard.getAllShipStatus() == false) {
-            console.log("All ship destroyed, game end");
+            this.whoWin = "You Win!!";
+            this.gameEndEvent();
           }
         });
       }
     }
   }
 
-  playTurn() {
-    //player select grid -> check if all ship sink or not -> cpu select grid -> check if all ship sink or not -> repeat
-    if (this.gameOver) return;
-    const playerCPU = this.playerCPU;
-    const playerHuman = this.playerHuman;
-    const playerBoard = playerHuman.gameboard;
-    const cpuBoard = playerCPU.gameboard;
-    const playerAttack = cpuBoard();
+  gameEndEvent() {
+    const dialog = document.querySelector("#game-end");
+    const domWinner = document.getElementById("show-winner");
+    dialog.showModal();
+    const winner = this.whoWin;
+    domWinner.innerText = winner;
+
+    //restart game button
+    const button = document.getElementById("restartGame");
+    button.addEventListener("click", () => {
+      dialog.close();
+      let playerBoard = this.playerHuman.gameboard;
+      let cpuBoard = this.playerCPU.gameboard;
+
+      const dialogStartGame = document.querySelector("dialog");
+      dialogStartGame.showModal();
+      const playerContainer = document.getElementById("player-grid");
+      const cpuContainer = document.getElementById("cpu-grid");
+      playerContainer.innerHTML = "";
+      cpuContainer.innerHTML = "";
+      this.cpuGridArray = [];
+      this.hitArray = [];
+      playerBoard.createBoard();
+      cpuBoard.createBoard();
+      playerBoard.resetBoard();
+      cpuBoard.resetBoard();
+      const playerHuman = this.playerHuman;
+      this.placeShip(this.playerCPU);
+      this.placeShip(this.playerHuman);
+      const cells = document.querySelectorAll(".grid-square");
+      cells.forEach((cell) => {
+        //reset cell color
+        cell.style.backgroundColor = "#f0f0f0";
+      });
+      const previewGrid = new CreateGrid(playerHuman, playerBoard);
+      previewGrid.updateShipToDOM(playerHuman, playerBoard);
+    });
   }
 
   cpuPlayTurn() {
@@ -180,9 +204,11 @@ export class GameMaster {
     const randomTarget = this.cpuGridArray[randomIndex];
     this.hitArray.push(randomIndex);
     playerBoard.receiveAttack(randomTarget);
+    //check if cpu win
+    if (playerBoard.getAllShipStatus() == false) {
+      console.log("All player ship destroyed, game end");
+      this.whoWin = "You Lose!!";
+      this.gameEndEvent();
+    }
   }
-
-  switchTurn() {}
-
-  checkGameOver() {}
 }
